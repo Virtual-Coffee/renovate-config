@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Low-noise configuration for dormant or content-only repositories: security fixes and GitHub Actions only.",
+  "schedule": ["before 6am on the first day of the month"],
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "description": "Only GitHub Actions get routine updates; everything else waits for a security advisory or dashboard approval",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}

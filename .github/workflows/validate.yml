@@ -1,0 +1,24 @@
+name: Validate Renovate config
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    name: renovate-config-validator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      # --no-global is required: without it the validator treats explicitly
+      # named files as self-hosted global config and reports spurious errors.
+      - name: Validate presets
+        run: |
+          npx --yes --package renovate -- renovate-config-validator --strict --no-global \
+            default.json automerge.json low-activity.json
