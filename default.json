@@ -30,6 +30,12 @@
       "groupName": "devDependencies (non-major)"
     },
     {
+      "description": "Group non-major runtime dependency bumps into one PR",
+      "matchDepTypes": ["dependencies", "optionalDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dependencies (non-major)"
+    },
+    {
       "description": "Group all GitHub Actions bumps into one PR",
       "matchManagers": ["github-actions"],
       "groupName": "github-actions",
