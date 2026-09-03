@@ -42,9 +42,14 @@
       "labels": ["dependencies", "github_actions"]
     },
     {
-      "description": "Keep .nvmrc and engines.node moving together",
-      "matchManagers": ["nvm", "npm"],
-      "matchPackageNames": ["node"],
+      "description": "Group runtime/tooling version pins (.tool-versions, mise, .node-version, .nvmrc) into one PR. Node is pulled back out by the rule below.",
+      "matchManagers": ["asdf", "mise", "nodenv", "nvm"],
+      "groupName": "tooling"
+    },
+    {
+      "description": "Keep every Node pin moving together: .nvmrc, .node-version, .tool-versions, mise, engines.node and volta",
+      "matchManagers": ["nvm", "nodenv", "asdf", "mise", "npm"],
+      "matchPackageNames": ["node", "nodejs"],
       "groupName": "node"
     }
   ]

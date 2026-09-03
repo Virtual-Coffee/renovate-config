@@ -25,11 +25,11 @@ Then ask an org owner to add the repo to the [Renovate GitHub App](https://githu
 { "extends": ["github>Virtual-Coffee/renovate-config"] }
 ```
 
-Updates npm dependencies, GitHub Actions, and `.nvmrc`/`engines.node`. Highlights:
+Updates npm dependencies, GitHub Actions, and tooling version pins (`.nvmrc`, `.node-version`, `.tool-versions`, mise, `engines.node`). Highlights:
 
 - **Weekly**, Monday before 6am (America/New_York). Security fixes ignore the schedule and open immediately.
 - **Major updates do not open PRs.** They're listed on the repo's Dependency Dashboard issue with a checkbox; tick it when you're ready to deal with the upgrade. This keeps breaking majors from rotting as permanently-open PRs.
-- **Grouped** so the PR count stays low: one PR for non-major runtime dependencies, one for non-major devDependencies, one for all GitHub Actions, one for Node.
+- **Grouped** so the PR count stays low: one PR for non-major runtime dependencies, one for non-major devDependencies, one for all GitHub Actions, one for Node (every file that pins it moves together), and one for the remaining tooling versions.
 - **Monthly lockfile maintenance** to pick up transitive dependency fixes.
 - **No automerge** — every PR needs a human.
 
@@ -57,7 +57,7 @@ Automerges non-major devDependency and GitHub Actions updates. Runtime dependenc
 }
 ```
 
-Monthly instead of weekly, no lockfile maintenance, and npm updates are held behind Dependency Dashboard approval. Security fixes and GitHub Actions updates still come through normally.
+Monthly instead of weekly, no lockfile maintenance, and npm plus tooling-version updates are held behind Dependency Dashboard approval. Security fixes and GitHub Actions updates still come through normally.
 
 ## Contributing
 
