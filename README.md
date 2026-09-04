@@ -31,6 +31,7 @@ Updates npm dependencies, GitHub Actions, and tooling version pins (`.nvmrc`, `.
 - **Major updates do not open PRs.** They're listed on the repo's Dependency Dashboard issue with a checkbox; tick it when you're ready to deal with the upgrade. This keeps breaking majors from rotting as permanently-open PRs.
 - **Grouped** so the PR count stays low: one PR for non-major runtime dependencies, one for non-major devDependencies, one for all GitHub Actions, one for Node (every file that pins it moves together), and one for the remaining tooling versions.
 - **Monthly lockfile maintenance** to pick up transitive dependency fixes.
+- **npm updates wait three days** after publish before a PR is raised (`security:minimumReleaseAgeNpm`). This clears pnpm 11's own one-day `minimumReleaseAge` gate — pnpm refuses to install a version younger than that, so a PR for a fresh release fails the build — and gives scanners a window to catch a compromised package. Security fixes are exempt and still open immediately.
 - **No automerge** — every PR needs a human.
 
 ### `automerge` — opt in if CI gates your PRs
