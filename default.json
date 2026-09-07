@@ -42,7 +42,7 @@
       "labels": ["dependencies", "github_actions"]
     },
     {
-      "description": "Group runtime/tooling version pins (.tool-versions, mise, .node-version, .nvmrc) into one PR. Node is pulled back out by the rule below.",
+      "description": "Group runtime/tooling version pins (.tool-versions, mise, .node-version, .nvmrc) into one PR. Node and the package manager are pulled back out by the rules below.",
       "matchManagers": ["asdf", "mise", "nodenv", "nvm"],
       "groupName": "tooling"
     },
@@ -51,6 +51,12 @@
       "matchManagers": ["nvm", "nodenv", "asdf", "mise", "npm"],
       "matchPackageNames": ["node", "nodejs"],
       "groupName": "node"
+    },
+    {
+      "description": "Keep every package-manager pin moving together: .tool-versions, mise and package.json packageManager",
+      "matchManagers": ["asdf", "mise", "npm"],
+      "matchPackageNames": ["pnpm", "yarn", "bun", "npm"],
+      "groupName": "package manager"
     }
   ]
 }
