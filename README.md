@@ -29,7 +29,7 @@ Updates npm dependencies, GitHub Actions, and tooling version pins (`.nvmrc`, `.
 
 - **Weekly**, Monday before 6am (America/New_York). Security fixes ignore the schedule and open immediately.
 - **Major updates do not open PRs.** They're listed on the repo's Dependency Dashboard issue with a checkbox; tick it when you're ready to deal with the upgrade. This keeps breaking majors from rotting as permanently-open PRs.
-- **Grouped** so the PR count stays low: one PR for non-major runtime dependencies, one for non-major devDependencies, one for all GitHub Actions, one for Node (every file that pins it moves together), and one for the remaining tooling versions.
+- **Grouped** so the PR count stays low: one PR for all non-major npm bumps (runtime and dev together), one for all GitHub Actions, and one for tooling. The tooling PR moves Node and pnpm in lockstep across every file that pins them (`.nvmrc`, `.node-version`, `.tool-versions`, mise, `engines.node`, `packageManager`), and `@types/node` major and minor bumps ride along with it; `@types/node` patches stay in the npm PR.
 - **Monthly lockfile maintenance** to pick up transitive dependency fixes.
 - **npm updates wait three days** after publish before a PR is raised (`security:minimumReleaseAgeNpm`). This clears pnpm 11's own one-day `minimumReleaseAge` gate — pnpm refuses to install a version younger than that, so a PR for a fresh release fails the build — and gives scanners a window to catch a compromised package. Security fixes are exempt and still open immediately.
 - **No automerge** — every PR needs a human.
@@ -45,7 +45,7 @@ Updates npm dependencies, GitHub Actions, and tooling version pins (`.nvmrc`, `.
 }
 ```
 
-Automerges non-major devDependency and GitHub Actions updates. Runtime dependency PRs are **not** automerged even with this preset — those still need a human. **Only use this in repos where required status checks actually run tests or a build on pull requests** — otherwise it merges unverified changes.
+Automerges non-major devDependency and GitHub Actions updates. Runtime dependencies are never automerge-eligible, and Renovate only automerges a PR when every update in it qualifies — so the grouped npm PR automerges only on weeks where it contains nothing but devDependencies, and the tooling PR is not automerged whenever a Node or pnpm pin is in it. GitHub Actions PRs automerge every time. **Only use this in repos where required status checks actually run tests or a build on pull requests** — otherwise it merges unverified changes.
 
 ### `low-activity` — opt in for dormant or content-only repos
 

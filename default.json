@@ -24,14 +24,8 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "Group non-major devDependency bumps into one PR",
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "devDependencies (non-major)"
-    },
-    {
-      "description": "Group non-major runtime dependency bumps into one PR",
-      "matchDepTypes": ["dependencies", "optionalDependencies"],
+      "description": "Group every non-major npm bump (dependencies, devDependencies, optionalDependencies) into one PR",
+      "matchDepTypes": ["dependencies", "devDependencies", "optionalDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "dependencies (non-major)"
     },
@@ -42,15 +36,22 @@
       "labels": ["dependencies", "github_actions"]
     },
     {
-      "description": "Group runtime/tooling version pins (.tool-versions, mise, .node-version, .nvmrc) into one PR. Node is pulled back out by the rule below.",
+      "description": "Group every runtime/tooling version pin (.tool-versions, mise, .node-version, .nvmrc) into one PR",
       "matchManagers": ["asdf", "mise", "nodenv", "nvm"],
       "groupName": "tooling"
     },
     {
-      "description": "Keep every Node pin moving together: .nvmrc, .node-version, .tool-versions, mise, engines.node and volta",
-      "matchManagers": ["nvm", "nodenv", "asdf", "mise", "npm"],
-      "matchPackageNames": ["node", "nodejs"],
-      "groupName": "node"
+      "description": "Keep node and pnpm in lockstep with the pin files above: engines.node, volta and the packageManager field join the tooling PR",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["node", "pnpm"],
+      "groupName": "tooling"
+    },
+    {
+      "description": "@types/node tracks the Node line, so its major and minor bumps ride the tooling PR. Patches ship several times a week and stay in the npm PR so they don't churn tooling.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "tooling"
     }
   ]
 }
