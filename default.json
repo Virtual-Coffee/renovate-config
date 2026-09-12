@@ -41,9 +41,9 @@
       "groupName": "tooling"
     },
     {
-      "description": "Keep node and pnpm in lockstep with the pin files above: engines.node, volta and the packageManager field join the tooling PR",
+      "description": "Keep node and the package manager in lockstep with the pin files above: engines.node, volta and the packageManager field join the tooling PR",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["node", "pnpm"],
+      "matchPackageNames": ["node", "pnpm", "yarn", "bun", "npm"],
       "groupName": "tooling"
     },
     {
